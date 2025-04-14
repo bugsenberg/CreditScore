@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Previsão de Score de Crédito</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #222;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #444;
+            width: 400px;
+            text-align: center;
+        }
+
+        label, select {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        select {
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #00ffcc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Previsão de Score de Crédito</h2>
+        <form method="POST">
+            <label for="profissao">Profissão:</label>
+            <select name="profissao" required>
+                {% for p in profissoes %}
+                    <option value="{{ p }}">{{ p }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="mix">Mix de Crédito:</label>
+            <select name="mix" required>
+                {% for m in mixes %}
+                    <option value="{{ m }}">{{ m }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="comportamento">Comportamento de Pagamento:</label>
+            <select name="comportamento" required>
+                {% for c in comportamentos %}
+                    <option value="{{ c }}">{{ c }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="submit" value="Prever">
+        </form>
+
+        {% if score is not none %}
+            <div class="resultado">
+                {% if "Erro" in score|string %}
+                    <span style="color: red;">{{ score }}</span>
+                {% else %}
+                    Score de crédito previsto: <strong>{{ score }}</strong>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
